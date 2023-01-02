@@ -16,7 +16,7 @@ while(valid):
         print("Please only enter \'e\' for encrypt or \'d\' for decrypt")
         
 def encrypt(codeList):
-    # converts each character in the list to the corresponding ASCII value number and adds the index to that value
+    # Converts each character in the list to the corresponding ASCII value number and adds the index to that value
     for i in range(len(codeList)):
         # Prevents codes longer than 94 characters from breaking the code by escaping out of the intended ASCII values
         if i > 94:
