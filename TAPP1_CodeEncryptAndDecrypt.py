@@ -18,7 +18,7 @@ for letter in code:
 print(codeList)
 
 if process == 'e':
-    print("e")
+    print('e')
 
 else:
-    print("d")
+    print('d')
