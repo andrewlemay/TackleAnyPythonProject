@@ -20,15 +20,35 @@ def main():
     multiple = input('Are there multiple jobs you want to add? (y/n): ')
     if multiple.lower()[:1] == 'y': # enter if there are multiple jobs to add
         job_doc = input('Enter the name of the file with the job links: ')
-        with open(job_doc) as job_links: # open the file with the job links
-            for link in job_links: # loop through the links
-                get_job_info(link) # call the function to get the job info from the Indeed API
+        with open(job_doc) as job_links:
+            for job_url in job_links:
+                #if "indeed" in link:
+                    #info = get_indeed_job_info(job_url) # call the function to get the job info from the Indeed API
+                    #enter_info(info) # call the function to enter the info into the excel spreadsheet
+                #elif: "linkedin" in link:
+                    #info = get_linkedin_job_info(job_url) # call the function to get the job info from the LinkedIn API
+                    #enter_info(info)
+                try:
+                    info = get_indeed_job_info(job_url) # call the function to get the job info from the Indeed API
+                    enter_info(info)
+                except:
+                    print("Invalid url")
+
     else:
         job_url = input('Enter the url of the job posting: ') # get the url of the job posting
-        get_job_info(job_url) # call the function to get the job info from the Indeed API
-    
+        #if "indeed" in link:
+            #info = get_indeed_job_info(job_url)
+            #enter_info(info)
+        #elif: "linkedin" in link:
+            #info = get_linkedin_job_info(job_url)
+            #enter_info(info)
+        try:
+            info = get_indeed_job_info(job_url)
+            enter_info(info)
+        except:
+            print("Invalid url")
 
-def get_job_info(job_url): # function to get the job info from the Indeed API
+def get_indeed_job_info(job_url): # function to get the job info from the Indeed API
     job_id = job_url[job_url.index('jk=')+3:job_url.index('&vjs')] # get the job id from the url
 
     url = "https://indeed12.p.rapidapi.com/job/"+job_id # create the url for the Indeed API call
@@ -89,8 +109,10 @@ def get_job_info(job_url): # function to get the job info from the Indeed API
     except:
         pay = "Unknown"
 
-    enter_info([job_title, company, location, pay, job_url]) # call the function to enter the info into the excel spreadsheet
+    return([job_title, company, location, pay, job_url])
 
+#def get_linkedin_job_info(job_url): # function to get the job info from the LinkedIn API
+    #return([job_title, company, location, pay, job_url])
     
 # enters the info into the excel spreadsheet, must pass a list with the job title, company, location, pay, and url
 def enter_info(info):
