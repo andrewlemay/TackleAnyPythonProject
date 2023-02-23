@@ -2,24 +2,27 @@
 # This takes the url of an Indeed job posting and pulls all of the relevant information and
 # puts it into an excel spreadsheet
 
-# To use, enter your workbook name on line 14 and run the script and paste in the indeed job url
+# To use, enter your workbook name on line 19 and run the script and paste in the indeed job url
 # Then go to https://rapidapi.com/mantiks-mantiks-default/api/indeed12 and sign up for an API key
-# Enter that API key on line 15
+# Enter that API key on line 20
+# If you want to add multiple jobs, create a text file with the job urls separated by a new line and
+# enter it on line 21
 
 import requests # used for making the call to the Indeed API
 from openpyxl import load_workbook # used for writing to the excel spreadsheet
 import datetime # used for getting the current date
 
-"""Enter your workbook name and API key here. I have chosen to keep both of them hardcoded
-but workbook name could be put into main and entered through input if you want separate
-workbooks for different job searches"""
+"""Enter your workbook name, API key, and name of your text document with your job links
+ here. I have chosen to keep both of them hardcoded but workbook name and the text document
+ could be put into main and entered through input if you want separate workbooks for different 
+ job searches or have different files you want to add jobs from"""
 WB_NAME = "YOUR_WORKBOOK_NAME.xlsx"
 API_KEY = "YOUR_API_KEY"
+job_doc = "YOUR_JOB_DOC.txt"
 
 def main():
     multiple = input('Are there multiple jobs you want to add? (y/n): ')
     if multiple.lower()[:1] == 'y': # enter if there are multiple jobs to add
-        job_doc = input('Enter the name of the file with the job links: ')
         with open(job_doc) as job_links:
             for job_url in job_links:
                 #if "indeed" in link:
@@ -75,35 +78,35 @@ def get_indeed_job_info(job_url): # function to get the job info from the Indeed
         num_string = pay_string[pay_string.find('$'):pay_string.find("per")-1] # get a string that only includes the pay range
 
         if "hour" in pay_string:
-            if '-' in pay_string: # if the pay is given as an hourly range
-                pay_string = pay_string.replace('.00', '')
-                pay_string = pay_string.replace(' ', '')
-                pay = pay_string.replace('$', '') + '/hour'
+            if '-' in num_string: # if the pay is given as an hourly range
+                num_string = num_string.replace('.00', '')
+                num_string = num_string.replace(' ', '')
+                pay = num_string.replace('$', '') + '/hour'
             elif "From" in pay_string or "from" in pay_string: # if the pay is given as an hourly minimum
-                pay_string = pay_string.replace('.00', '')
-                pay_string = pay_string.replace(' ', '')
-                pay = pay_string.replace('$', '') + '/hour+'
+                num_string = num_string.replace('.00', '')
+                num_string = num_string.replace(' ', '')
+                pay = num_string.replace('$', '') + '/hour+'
             elif "To" in pay_string or "to" in pay_string: # if the pay is given as an hourly maximum
-                pay_string = pay_string.replace('.00', '')
-                pay_string = pay_string.replace(' ', '')
-                pay = "Up to " + pay_string.replace('$', '') + "/hour"
+                num_string = num_string.replace('.00', '')
+                num_string = num_string.replace(' ', '')
+                pay = "Up to " + num_string.replace('$', '') + "/hour"
             else:
-                pay_string = pay_string.replace('.00', '')
-                pay = pay_string.replace('$', '') + '/hour'
+                num_string = num_string.replace('.00', '')
+                pay = num_string.replace('$', '') + '/hour'
 
         elif "year" in pay_string:
             if '-' in pay_string: # if the pay is given as a salary range
-                pay_string = pay_string.replace('.00', '')
-                pay_string = pay_string.replace(' ', '')
-                pay = pay_string.replace('$', '') + '/year'
+                num_string = num_string.replace('.00', '')
+                num_string = num_string.replace(' ', '')
+                pay = num_string.replace('$', '') + '/year'
             elif "From" in pay_string or "from" in pay_string: # if the pay is given as a salary minimum
-                pay_string = pay_string.replace('.00', '')
-                pay_string = pay_string.replace(' ', '')
-                pay = pay_string.replace('$', '') + '/year+'
+                num_string = num_string.replace('.00', '')
+                num_string = num_string.replace(' ', '')
+                pay = num_string.replace('$', '') + '/year+'
             elif "To" in pay_string or "to" in pay_string: # if the pay is given as a salary maximum
-                pay_string = pay_string.replace('.00', '')
-                pay_string = pay_string.replace(' ', '')
-                pay = "Up to " + pay_string.replace('$', '') + "/year"
+                num_string = num_string.replace('.00', '')
+                num_string = num_string.replace(' ', '')
+                pay = "Up to " + num_string.replace('$', '') + "/year"
         else:
             pay = "Unknown"
     except:
