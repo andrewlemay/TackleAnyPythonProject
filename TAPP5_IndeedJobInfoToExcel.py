@@ -98,15 +98,15 @@ def get_indeed_job_info(job_url): # function to get the job info from the Indeed
             if '-' in pay_string: # if the pay is given as a salary range
                 num_string = num_string.replace('.00', '')
                 num_string = num_string.replace(' ', '')
-                pay = num_string.replace('$', '') + '/year'
+                pay = num_string.replace('$', '')
             elif "From" in pay_string or "from" in pay_string: # if the pay is given as a salary minimum
                 num_string = num_string.replace('.00', '')
                 num_string = num_string.replace(' ', '')
-                pay = num_string.replace('$', '') + '/year+'
+                pay = num_string.replace('$', '') + '+'
             elif "To" in pay_string or "to" in pay_string: # if the pay is given as a salary maximum
                 num_string = num_string.replace('.00', '')
                 num_string = num_string.replace(' ', '')
-                pay = "Up to " + num_string.replace('$', '') + "/year"
+                pay = "Up to " + num_string.replace('$', '')
         else:
             pay = "Unknown"
     except:
