@@ -11,7 +11,7 @@ from openpyxl import load_workbook # used for writing to the excel spreadsheet
 import datetime # used for getting the current date
 
 """Enter your workbook name and API key here. I have chosen to keep both of them hardcoded
-but workbook name could be put into main and entered through input if you want to separate
+but workbook name could be put into main and entered through input if you want separate
 workbooks for different job searches"""
 WB_NAME = "YOUR_WORKBOOK_NAME.xlsx"
 API_KEY = "YOUR_API_KEY"
@@ -51,13 +51,41 @@ def get_job_info(job_url): # function to get the job info from the Indeed API
     # get the pay range (only works if it is a pay range explicitly given by the company and it is in salary form, otherwise gives "Unknown")
     try:
         pay_index = posting_dict['description'].find('$') # find the index of the first dollar sign (where pay range starts)
-        pay_string = posting_dict['description'][pay_index: pay_index+25] # get a string that includes the entire pay range
-        pay_separated = pay_string.split(' ')
-        if '.' in pay_separated[0]: # remove the decimal from the pay range if it exists
-            pay_separated[0] = pay_separated[0][:pay_separated[0].index('.')]
-        if '.' in pay_separated[2]: # remove the decimal from the pay range if it exists
-            pay_separated[2] = pay_separated[2][:pay_separated[2].index('.')]
-        pay = pay_separated[0][1:] + '-' + pay_separated[2][1:]
+        pay_string = posting_dict['description'][pay_index-15: pay_index+35] # get a string that includes the entire pay range
+        num_string = pay_string[pay_string.find('$'):pay_string.find("per")-1] # get a string that only includes the pay range
+
+        if "hour" in pay_string:
+            if '-' in pay_string: # if the pay is given as an hourly range
+                pay_string = pay_string.replace('.00', '')
+                pay_string = pay_string.replace(' ', '')
+                pay = pay_string.replace('$', '') + '/hour'
+            elif "From" in pay_string or "from" in pay_string: # if the pay is given as an hourly minimum
+                pay_string = pay_string.replace('.00', '')
+                pay_string = pay_string.replace(' ', '')
+                pay = pay_string.replace('$', '') + '/hour+'
+            elif "To" in pay_string or "to" in pay_string: # if the pay is given as an hourly maximum
+                pay_string = pay_string.replace('.00', '')
+                pay_string = pay_string.replace(' ', '')
+                pay = "Up to " + pay_string.replace('$', '') + "/hour"
+            else:
+                pay_string = pay_string.replace('.00', '')
+                pay = pay_string.replace('$', '') + '/hour'
+
+        elif "year" in pay_string:
+            if '-' in pay_string: # if the pay is given as a salary range
+                pay_string = pay_string.replace('.00', '')
+                pay_string = pay_string.replace(' ', '')
+                pay = pay_string.replace('$', '') + '/year'
+            elif "From" in pay_string or "from" in pay_string: # if the pay is given as a salary minimum
+                pay_string = pay_string.replace('.00', '')
+                pay_string = pay_string.replace(' ', '')
+                pay = pay_string.replace('$', '') + '/year+'
+            elif "To" in pay_string or "to" in pay_string: # if the pay is given as a salary maximum
+                pay_string = pay_string.replace('.00', '')
+                pay_string = pay_string.replace(' ', '')
+                pay = "Up to " + pay_string.replace('$', '') + "/year"
+        else:
+            pay = "Unknown"
     except:
         pay = "Unknown"
 
