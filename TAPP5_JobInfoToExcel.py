@@ -1,6 +1,8 @@
+# TAPP5: Job Info to Excel
+# 
 # This is inspired by my current job hunt and needing to keep all of my applications oragnized
-# This takes the url of an Indeed job posting and pulls all of the relevant information and
-# puts it into an excel spreadsheet
+# This takes the url of an Indeed or LinkedIn job posting, pulls all of the relevant information
+# and puts it into an existing excel spreadsheet
 
 # To use, enter your workbook name on line 20 and run the script and paste in the indeed job url
 # Then go to https://rapidapi.com/mantiks-mantiks-default/api/indeed12 and sign up for an API key
@@ -14,8 +16,8 @@ import datetime # used for getting the current date
 from bs4 import BeautifulSoup # used for parsing the LinkedIn job postings
 
 """Enter your workbook name, API key, and name of your text document with your job links
- here. I have chosen to keep both of them hardcoded but workbook name and the text document
- could be put into main and entered through input if you want separate workbooks for different 
+ here. I have chosen to keep them hardcoded but workbook name and the text document could
+ be put into main and entered through input if you want separate workbooks for different 
  job searches or have different files you want to add jobs from"""
 WB_NAME = "YOUR_WORKBOOK_NAME.xlsx"
 API_KEY = "YOUR_API_KEY"
