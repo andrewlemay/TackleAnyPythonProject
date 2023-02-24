@@ -75,6 +75,8 @@ def get_indeed_job_info(job_url): # function to get the job info from the Indeed
 
     location_dirty = posting_dict['location'] # get the location
     location = ''.join([i for i in location_dirty if not i.isdigit()]) # remove the zip code from the location if it exists
+    if "remote" in location.lower() and not "hybrid" in location.lower(): # if the job is remote, add "Remote" to the location
+        location = "Remote"
 
     # get the pay range (only works if it is a pay range explicitly given by the company and it is in salary form, otherwise gives "Unknown")
     try:
