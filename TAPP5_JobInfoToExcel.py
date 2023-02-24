@@ -4,11 +4,11 @@
 # This takes the url of an Indeed or LinkedIn job posting, pulls all of the relevant information
 # and puts it into an existing excel spreadsheet
 
-# To use, enter your workbook name on line 20 and run the script and paste in the indeed job url
+# To use, enter your workbook name on line 22 and run the script and paste in the indeed job url
 # Then go to https://rapidapi.com/mantiks-mantiks-default/api/indeed12 and sign up for an API key
-# Enter that API key on line 21
+# Enter that API key on line 23
 # If you want to add multiple jobs, create a text file with the job urls separated by a new line and
-# enter it on line 22
+# enter it on line 24
 
 import requests # used for making the call to the Indeed API
 from openpyxl import load_workbook # used for writing to the excel spreadsheet
