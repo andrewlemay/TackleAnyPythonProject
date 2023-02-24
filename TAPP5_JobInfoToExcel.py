@@ -134,12 +134,11 @@ def get_linkedin_job_info(job_url): # function to get the job info from the Link
     # gets the pay (only works if it is an explicitly stated hourly pay)
     try:
         p = soup.find_all('p') # get all the p tags
-        pay_section = ""
         for i in p: 
             if '$' in i.text: # find the p tag that contains the pay
                 pay_section = i.text
+                pay = pay_section[pay_section.find('$')+1:pay_section.find('$')+7].rstrip() + "/hour" # get pay from the p tag and formats it
                 break
-        pay = pay_section[pay_section.find('$')+1:pay_section.find('$')+7].rstrip() + "/hour" # get pay from the p tag and formats it
     except:
         pass
 
