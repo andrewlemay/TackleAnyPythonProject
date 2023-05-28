@@ -3,7 +3,9 @@
 ### Author: Andrew LeMay
 
 def main():
+    fileConversions = {'a':0, 'b':1, 'c':2, 'd':3, 'e':4, 'f':5, 'g':6, 'h':7}
     board = makeBoard()
+    realBoard = makeRealBoard()
     printBoard(board)
 
 def makeBoard():
@@ -25,9 +27,22 @@ def makeBoard():
            ['|', ' ', 'WR', ' ', "|", ' ', 'WN', ' ', '|', ' ', 'WB', ' ', '|', ' ', 'WQ', ' ', '|', ' ', 'WK', ' ', '|', ' ', 'WB', ' ', '|', ' ', 'WN', ' ', '|', ' ', 'WR', ' ', '|'],
            ['_', '_', '__', '_', "_", '_', '__', '_', '_', '_', '__', '_', '_', '_', '__', '_', '_', '_', '__', '_', '_', '_', '__', '_', '_', '_', '__', '_', '_', '_', '__', '_', '_']]
 
+def makeRealBoard():
+    return [["BR", "BN", "BB", "BQ", "BK", "BB", "BN", "BR"],
+            ["Bp", "Bp", "Bp", "Bp", "Bp", "Bp", "Bp", "Bp"],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["Wp", "Wp", "Wp", "Wp", "Wp", "Wp", "Wp", "Wp"],
+            ["WR", "WN", "WB", "WQ", "WK", "WB", "WN", "WR"]]
+
 def printBoard(board):
     for i in board:
         print("".join(i))
+
+def makeMove(board, player):
+    return board
 
 if __name__ == "__main__":
     main()
