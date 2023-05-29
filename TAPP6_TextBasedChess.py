@@ -4,9 +4,15 @@
 
 def main():
     fileConversions = {'a':0, 'b':1, 'c':2, 'd':3, 'e':4, 'f':5, 'g':6, 'h':7}
-    board = makeBoard()
-    realBoard = makeRealBoard()
-    printBoard(board)
+    players = ['W', 'B']
+    playAgain = "y"
+    while playAgain.lower() == "y":
+        board = makeBoard()
+        turn = 0
+        player = players[0]
+        realBoard = makeRealBoard()
+        printBoard(board)
+
 
 def makeBoard():
     return[['_', '_', '__', '_', "_", '_', '__', '_', '_', '_', '__', '_', '_', '_', '__', '_', '_', '_', '__', '_', '_', '_', '__', '_', '_', '_', '__', '_', '_', '_', '__', '_', '_'],
